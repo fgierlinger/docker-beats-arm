@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         beats: [metricbeat, filebeat, heartbeat, functionbeat, auditbeat, journalbeat, packetbeat]
-        version: [v7.10.2]
+        version: [7.10.2, 7.11.0]
     steps:
       - 
         name: Checkout
@@ -38,7 +38,7 @@ jobs:
           tags: fgierlinger/${{ matrix.beats }}:${{ matrix.version }}
           file: ${{ matrix.beats }}/Dockerfile
           build-args: |
-            BEATSVERSION=${{ matrix.version }}
+            BEATSVERSION=v${{ matrix.version }}
       - 
         name: Build ${{ matrix.beats }}:${{ matrix.version }} and push
         if: github.event_name == 'push'
@@ -49,4 +49,4 @@ jobs:
           tags: fgierlinger/${{ matrix.beats }}:${{ matrix.version }}
           file: ${{ matrix.beats }}/Dockerfile
           build-args: |
-            BEATSVERSION=${{ matrix.version }}
+            BEATSVERSION=v${{ matrix.version }}
