@@ -1,7 +1,7 @@
 FROM golang:latest as builder
 ARG BEATSVERSION=master
 RUN apt-get -y update && apt-get -y --no-install-recommends install python3
-RUN go get -u -d github.com/magefile/mage && \
+RUN mkdir -p ${GOPATH}/src/github.com/magefile/mage && go get -u -d github.com/magefile/mage && \
     cd $GOPATH/src/github.com/magefile/mage && \
     go run bootstrap.go
 RUN mkdir -p ${GOPATH}/src/github.com/elastic && \
