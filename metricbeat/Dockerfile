@@ -11,10 +11,10 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/metricbeat/ && \
     mage dashboards
 
 FROM centos:8
-RUN useradd --no-create-home --system beats && mkdir /beats && chown beats:beats /beats
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/metricbeat/metricbeat /beats/metricbeat
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/metricbeat/modules.d/ /beats/modules.d/
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/metricbeat/build/kibana/ /beats/kibana/
-WORKDIR /beats
-ENTRYPOINT ["/beats/metricbeat", "-e"]
+RUN useradd --no-create-home --system beats && mkdir /usr/share/metricbeat && chown beats:beats /usr/share/metricbeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/metricbeat/metricbeat /usr/share/metricbeat/metricbeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/metricbeat/modules.d/ /usr/share/metricbeat/modules.d/
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/metricbeat/build/kibana/ /usr/share/metricbeat/kibana/
+WORKDIR /usr/share/metricbeat
+CMD ["/usr/share/metricbeat/metricbeat", "-e"]
 USER beats

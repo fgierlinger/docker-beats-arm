@@ -11,10 +11,10 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/filebeat/ && \
     mage dashboards
 
 FROM centos:8
-RUN useradd --no-create-home --system beats && mkdir /beats && chown beats:beats /beats
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/filebeat /beats/filebeat
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/modules.d/ /beats/modules.d/
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/build/kibana/ /beats/kibana/
-WORKDIR /beats
-ENTRYPOINT ["/beats/filebeat", "-e"]
+RUN useradd --no-create-home --system beats && mkdir /usr/share/filebeat && chown beats:beats /usr/share/filebeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/filebeat /usr/share/filebeat/filebeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/modules.d/ /usr/share/filebeat/modules.d/
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/build/kibana/ /usr/share/filebeat/kibana/
+WORKDIR /usr/share/filebeat
+CMD ["/usr/share/filebeat/filebeat", "-e"]
 USER beats
