@@ -10,8 +10,9 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/x-pack/elastic-agent && \
     mage build:binary
 
 FROM centos:8
-RUN useradd --no-create-home --system beats && mkdir /beats && chown beats:beats /beats
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/x-pack/elastic-agent/build/elastic-agent /beats/elastic-agent
+RUN useradd --no-create-home --system beats && mkdir /usr/share/elastic_agent && chown beats:beats /usr/share/elastic_agent
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/x-pack/elastic-agent/build/elastic-agent /usr/share/elastic_agent/elastic-agent
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/x-pack/elastic-agent/elastic-agent.docker.yml /usr/share/elastic_agent/elastic-agent.yml
 WORKDIR /beats
-ENTRYPOINT ["/beats/elastic-agent", "-e"]
+ENTRYPOINT ["/usr/share/elastic_agent/elastic-agent", "-e"]
 USER beats
