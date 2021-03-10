@@ -1,4 +1,4 @@
-FROM golang:latest as builder
+FROM golang:1.15 as builder
 ARG BEATSVERSION=master
 RUN apt-get -y update && apt-get -y --no-install-recommends install python3
 RUN go get -u -d github.com/magefile/mage && \
