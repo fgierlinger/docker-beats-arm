@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        beats: [metricbeat, filebeat, heartbeat, functionbeat, auditbeat, journalbeat, packetbeat]
+        beats: [metricbeat, filebeat, heartbeat, auditbeat, journalbeat, packetbeat]
         version: [7.11.2]
     steps:
       - 
