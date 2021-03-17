@@ -16,6 +16,7 @@ COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbe
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbeat/module /usr/share/auditbeat/module
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbeat/build/kibana/ /usr/share/auditbeat/kibana/
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbeat/auditbeat.docker.yml /usr/share/auditbeat/auditbeat.yml
+RUN dnf install -y -q audit
 WORKDIR /usr/share/auditbeat
 CMD ["/usr/share/auditbeat/auditbeat", "-e"]
 USER beats
