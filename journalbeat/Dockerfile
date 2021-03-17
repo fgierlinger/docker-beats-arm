@@ -10,8 +10,8 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/journalbeat/ && \
     mage build
 
 FROM centos:8
-RUN useradd --no-create-home --system beats && mkdir /beats && chown beats:beats /beats
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/journalbeat/journalbeat /beats/journalbeat
-WORKDIR /beats
-ENTRYPOINT ["/beats/journalbeat", "-e"]
+RUN useradd --no-create-home --system beats && mkdir /usr/share/journalbeat && chown beats:beats /usr/share/journalbeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/journalbeat/journalbeat /usr/share/journalbeat/journalbeat
+WORKDIR /usr/share/journalbeat/
+CMD ["/usr/share/journalbeat/journalbeat", "-e"]
 USER beats

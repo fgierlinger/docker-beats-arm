@@ -12,9 +12,9 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/packetbeat/ && \
 
 FROM debian:10
 RUN apt-get -y update && apt-get -y --no-install-recommends install libpcap-dev
-RUN useradd --no-create-home --system beats && mkdir /beats && chown beats:beats /beats
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/packetbeat/packetbeat /beats/packetbeat
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/packetbeat/build/kibana/ /beats/kibana/
-WORKDIR /beats
-ENTRYPOINT ["/beats/packetbeat", "-e"]
+RUN useradd --no-create-home --system beats && mkdir /usr/share/packetbeat && chown beats:beats /usr/share/packetbeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/packetbeat/packetbeat /usr/share/packetbeat/packetbeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/packetbeat/build/kibana/ /usr/share/packetbeat/kibana/
+WORKDIR /usr/share/packetbeat
+CMD ["/usr/share/packetbeat/packetbeat", "-e"]
 USER beats
