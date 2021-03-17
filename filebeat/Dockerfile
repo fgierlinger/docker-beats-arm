@@ -16,7 +16,7 @@ COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebea
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/module/ /usr/share/filebeat/module/
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/modules.d/ /usr/share/filebeat/modules.d/
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/build/kibana/ /usr/share/filebeat/kibana/
-COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/usr/share/filebeat/filebeat.docker.yml /usr/share/filebeat/filebeat.yml
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/filebeat.docker.yml /usr/share/filebeat/filebeat.yml
 WORKDIR /usr/share/filebeat
 CMD ["/usr/share/filebeat/filebeat", "-e"]
 USER beats
