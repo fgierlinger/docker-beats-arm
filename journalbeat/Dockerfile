@@ -12,6 +12,7 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/journalbeat/ && \
 FROM centos:8
 RUN useradd --no-create-home --system beats && mkdir /usr/share/journalbeat && chown beats:beats /usr/share/journalbeat
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/journalbeat/journalbeat /usr/share/journalbeat/journalbeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/journalbeat/journalbeat.docker.yml /usr/share/journalbeat/journalbeat.yml
 WORKDIR /usr/share/journalbeat/
 CMD ["/usr/share/journalbeat/journalbeat", "-e"]
 USER beats

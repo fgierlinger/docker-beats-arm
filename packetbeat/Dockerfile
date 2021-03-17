@@ -15,6 +15,7 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install libpcap-dev
 RUN useradd --no-create-home --system beats && mkdir /usr/share/packetbeat && chown beats:beats /usr/share/packetbeat
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/packetbeat/packetbeat /usr/share/packetbeat/packetbeat
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/packetbeat/build/kibana/ /usr/share/packetbeat/kibana/
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/packetbeat/packetbeat.docker.yml /usr/share/packetbeat/packetbeat.yml
 WORKDIR /usr/share/packetbeat
 CMD ["/usr/share/packetbeat/packetbeat", "-e"]
 USER beats
