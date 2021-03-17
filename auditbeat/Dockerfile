@@ -13,7 +13,9 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/auditbeat/ && \
 FROM centos:8
 RUN useradd --no-create-home --system beats && mkdir /usr/share/auditbeat && chown beats:beats /usr/share/auditbeat
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbeat/auditbeat /usr/share/auditbeat/auditbeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbeat/module /usr/share/auditbeat/module
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbeat/build/kibana/ /usr/share/auditbeat/kibana/
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/auditbeat/auditbeat.docker.yml /usr/share/auditbeat/auditbeat.yml
 WORKDIR /usr/share/auditbeat
 CMD ["/usr/share/auditbeat/auditbeat", "-e"]
 USER beats

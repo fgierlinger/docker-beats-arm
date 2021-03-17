@@ -13,8 +13,10 @@ RUN cd ${GOPATH}/src/github.com/elastic/beats/filebeat/ && \
 FROM centos:8
 RUN useradd --no-create-home --system beats && mkdir /usr/share/filebeat && chown beats:beats /usr/share/filebeat
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/filebeat /usr/share/filebeat/filebeat
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/module/ /usr/share/filebeat/module/
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/modules.d/ /usr/share/filebeat/modules.d/
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/build/kibana/ /usr/share/filebeat/kibana/
+COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/filebeat/filebeat.docker.yml /usr/share/filebeat/filebeat.yml
 WORKDIR /usr/share/filebeat
 CMD ["/usr/share/filebeat/filebeat", "-e"]
 USER beats
