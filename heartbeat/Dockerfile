@@ -16,5 +16,5 @@ COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/heartbe
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/heartbeat/monitors/ /usr/share/heartbeat/monitors/
 COPY --from=builder --chown=beats:beats /go/src/github.com/elastic/beats/heartbeat/heartbeat.docker.yml /usr/share/heartbeat/heartbeat.yml
 WORKDIR /usr/share/heartbeat/
-ENTRYPOINT ["/usr/share/heartbeat/heartbeat", "-e"]
+CMD ["/usr/share/heartbeat/heartbeat", "-e"]
 USER beats
