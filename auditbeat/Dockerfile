@@ -7,8 +7,7 @@ RUN go get -u -d github.com/magefile/mage && \
 RUN mkdir -p ${GOPATH}/src/github.com/elastic && \
     git clone --branch ${BEATSVERSION} https://github.com/elastic/beats ${GOPATH}/src/github.com/elastic/beats
 RUN cd ${GOPATH}/src/github.com/elastic/beats/x-pack/auditbeat/ && \
-    mage build && \
-    mage dashboards
+    mage build
 RUN cd ${GOPATH}/src/github.com/elastic/beats/auditbeat/ && \
     mage dashboards
 
