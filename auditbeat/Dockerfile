@@ -1,6 +1,6 @@
 FROM golang:1.15 as builder
 ARG BEATSVERSION=master
-RUN apt-get -y update && apt-get -y --no-install-recommends install python3
+RUN apt-get -y update && apt-get -y --no-install-recommends install python3 librpm-dev
 RUN go get -u -d github.com/magefile/mage && \
     cd $GOPATH/src/github.com/magefile/mage && \
     go run bootstrap.go
