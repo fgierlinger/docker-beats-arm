@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         beats: [metricbeat, filebeat, heartbeat, auditbeat, journalbeat, packetbeat]
-        version: [7.12.0]
+        version: [7.12.1]
     steps:
       - 
         name: Checkout
